@@ -5,6 +5,11 @@ export interface Product {
     description: string
     category: string
     image: string
+    rating: {
+        count: number,
+        rate: number
+    }
 }
 
 export type GetProductsResponse = Product[]
+export type GetProductByIdResponse = Product

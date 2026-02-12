@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {Image} from "expo-image";
 import {HStack} from "@/components/ui/hstack";
@@ -32,35 +32,43 @@ export default function HomeScreen() {
 
   return (
       <SafeAreaView style={styles.container}>
-          <Image
-              source={require('@/assets/images/home-screen-main-image.jpg')}
-              style={styles.mainImage}
-          />
-          <VStack style={styles.contentContainer}>
-              <HStack  style={styles.headerContainer}>
-                  <Heading style={styles.headerTitle}>Exclusive offer</Heading>
-                    <Button variant="outline" size="md" action="secondary">
-                        <ButtonIcon style={{ width: 24, height: 24 }} color={mainBlackColor} as={SlidersHorizontal} />
-                    </Button>
-              </HStack>
-              <Grid
-                  className="gap-4"
-                  _extra={{
-                      className: 'grid-cols-2',
-                  }}
-              >
-                  {products.map((product, index) => (
-                      <GridItem
-                          key={index}
-                          _extra={{
-                              className: 'col-span-1',
-                          }}
-                      >
-                          <ProductCard image={product.image} title={product.title} description={product.description} price={product.price}/>
-                      </GridItem>
-                  ))}
-              </Grid>
-          </VStack>
+          <ScrollView>
+              <Image
+                  source={require('@/assets/images/home-screen-main-image.jpg')}
+                  style={styles.mainImage}
+              />
+              <VStack style={styles.contentContainer}>
+                  <HStack  style={styles.headerContainer}>
+                      <Heading style={styles.headerTitle}>Exclusive offer</Heading>
+                      <Button variant="outline" size="md" action="secondary">
+                          <ButtonIcon style={{ width: 24, height: 24 }} color={mainBlackColor} as={SlidersHorizontal} />
+                      </Button>
+                  </HStack>
+                  <Grid
+                      className="gap-4"
+                      _extra={{
+                          className: 'grid-cols-2',
+                      }}
+                  >
+                      {products.map((product, index) => (
+                          <GridItem
+                              key={index}
+                              _extra={{
+                                  className: 'col-span-1',
+                              }}
+                          >
+                              <ProductCard
+                                  id={product.id}
+                                  image={product.image}
+                                  title={product.title}
+                                  description={product.description}
+                                  price={product.price}
+                              />
+                          </GridItem>
+                      ))}
+                  </Grid>
+              </VStack>
+          </ScrollView>
       </SafeAreaView>
   );
 }

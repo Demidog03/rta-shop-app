@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GetProductsResponse} from "@/modules/products/api/products.api.types";
+import {GetProductByIdResponse, GetProductsResponse} from "@/modules/products/api/products.api.types";
 
 const baseUrl = 'https://fakestoreapi.com';
 
@@ -7,6 +7,10 @@ function getProducts() {
     return axios.get<GetProductsResponse>(`${baseUrl}/products`);
 }
 
-const productsApi = { getProducts };
+function getProductById(id: string) {
+    return axios.get<GetProductByIdResponse>(`${baseUrl}/products/${id}`);
+}
+
+const productsApi = { getProducts, getProductById };
 
 export default productsApi;
