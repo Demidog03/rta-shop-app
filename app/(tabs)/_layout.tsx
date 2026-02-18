@@ -23,7 +23,7 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-            tabBarActiveTintColor: 'rgba(23, 23, 23, 1)'
+            tabBarActiveTintColor: 'rgba(23, 23, 23, 1)',
         }}
       />
       <Tabs.Screen
@@ -39,7 +39,7 @@ export default function TabLayout() {
             options={{
                 title: 'Cart',
                 tabBarIcon: ({ color }) => <MaterialIcons name="shopping-cart" size={24} color={color} />,
-                tabBarActiveTintColor: 'rgba(23, 23, 23, 1)'
+                tabBarActiveTintColor: 'rgba(23, 23, 23, 1)',
             }}
         />
         <Tabs.Screen
