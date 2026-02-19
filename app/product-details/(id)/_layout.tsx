@@ -14,17 +14,13 @@ import {AddIcon} from "@/components/ui/icon";
 import {SafeAreaView, useSafeAreaInsets} from "react-native-safe-area-context";
 import {useAppDispatch, useAppSelector} from "@/store/hooks";
 import {addToCart, removeFromCart} from "@/store/slices/cart.slice";
-import {
-    Actionsheet,
-    ActionsheetBackdrop,
-    ActionsheetContent, ActionsheetDragIndicator,
-    ActionsheetDragIndicatorWrapper, ActionsheetItem, ActionsheetItemText
-} from "@/components/ui/actionsheet";
+import SwipeableModal from "@/components/swipeable-modal";
+import CartList from "@/components/cart-list";
 
 function ProductDetailsLayout() {
     const insets = useSafeAreaInsets();
     const [product, setProduct] = useState<Product | undefined>()
-    const [showActionsheet, setShowActionsheet] = useState(false)
+    const [visible, setVisible] = useState(false)
     const { id } = useLocalSearchParams()
     const { productIds } = useAppSelector(state => state.cart)
     const dispatch = useAppDispatch()
@@ -46,8 +42,6 @@ function ProductDetailsLayout() {
         }
     }
 
-    console.log(showActionsheet)
-
     function addToBag() {
         if (product?.id) {
             dispatch(addToCart(product.id))
@@ -60,8 +54,8 @@ function ProductDetailsLayout() {
         }
     }
 
-    function handleClose() {
-        setShowActionsheet(false)
+    function onClose() {
+        setVisible(false);
     }
 
     return (
@@ -96,29 +90,6 @@ function ProductDetailsLayout() {
                         <Text style={styles.description}>{product?.description}</Text>
                         <Text style={styles.description}>{product?.description}</Text>
                     </View>
-                    <Actionsheet useRNModal={true} isOpen={showActionsheet} onClose={handleClose}>
-                        <ActionsheetBackdrop />
-                        <ActionsheetContent>
-                            <ActionsheetDragIndicatorWrapper>
-                                <ActionsheetDragIndicator />
-                            </ActionsheetDragIndicatorWrapper>
-                            <ActionsheetItem onPress={handleClose}>
-                                <ActionsheetItemText>Edit Message</ActionsheetItemText>
-                            </ActionsheetItem>
-                            <ActionsheetItem onPress={handleClose}>
-                                <ActionsheetItemText>Mark Unread</ActionsheetItemText>
-                            </ActionsheetItem>
-                            <ActionsheetItem onPress={handleClose}>
-                                <ActionsheetItemText>Remind Me</ActionsheetItemText>
-                            </ActionsheetItem>
-                            <ActionsheetItem onPress={handleClose}>
-                                <ActionsheetItemText>Add to Saved Items</ActionsheetItemText>
-                            </ActionsheetItem>
-                            <ActionsheetItem isDisabled onPress={handleClose}>
-                                <ActionsheetItemText>Delete</ActionsheetItemText>
-                            </ActionsheetItem>
-                        </ActionsheetContent>
-                    </Actionsheet>
                 </ScrollView>
                 {!isInCart && (
                     <Fab
@@ -166,7 +137,7 @@ function ProductDetailsLayout() {
                                 marginBottom: insets.bottom + 12,
                                 right: 20
                             }}
-                            onPress={() => setShowActionsheet(true)}
+                            onPress={() => setVisible(true)}
                         >
                             <FabIcon color="white" as={ShoppingCartIcon} />
                             <FabLabel>Open cart</FabLabel>
@@ -174,6 +145,9 @@ function ProductDetailsLayout() {
                     </>
                 )}
             </SafeAreaView>
+            <SwipeableModal top={150} visible={visible} onClose={onClose}>
+                <CartList/>
+            </SwipeableModal>
         </>
     );
 }
@@ -229,5 +203,5 @@ const styles = StyleSheet.create({
     },
     description: {
         color: 'rgba(64, 64, 64, 1)'
-    }
+    },
 })

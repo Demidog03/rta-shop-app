@@ -10,6 +10,7 @@ import '@/global.css';
 import {Provider} from "react-redux";
 import {persistor, store} from "@/store/store";
 import {PersistGate} from "redux-persist/integration/react";
+import {GestureHandlerRootView} from "react-native-gesture-handler";
 
 export const unstable_settings = {
   anchor: '(tabs)',
@@ -22,13 +23,15 @@ export default function RootLayout() {
       <Provider store={store}>
           <PersistGate persistor={persistor}>
             <GluestackUIProvider mode="light">
-                <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-                    <Stack>
-                        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-                    </Stack>
-                    <StatusBar style="auto" />
-                </ThemeProvider>
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+                        <Stack>
+                            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                            <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+                        </Stack>
+                        <StatusBar style="auto" />
+                    </ThemeProvider>
+                </GestureHandlerRootView>
             </GluestackUIProvider>
           </PersistGate>
       </Provider>
